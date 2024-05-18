@@ -1,3 +1,4 @@
 """
-WARP protocol
+WARP
 """
+from .resolve import resolve
