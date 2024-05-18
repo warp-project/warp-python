@@ -28,7 +28,7 @@ class TLDServer:
         self.app = app
         self.domains = domains or {}
         self.tlds = tlds or [tld]
-        self.tlds = [tld.strip(".") for tld in self.tlds]
+        self.tlds = [_tld.strip(".") for _tld in self.tlds]
         try:
             assert tld or tlds
         except AssertionError:
