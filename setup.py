@@ -4,7 +4,7 @@ import os
 with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
     
-VERSION = '1.2.3'
+VERSION = '1.2.4'
 
 setup(
     name='warp-python',
