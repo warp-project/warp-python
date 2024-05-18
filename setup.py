@@ -1,9 +1,11 @@
 from setuptools import setup, find_packages
+import os
 
 with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
     
 VERSION = '1.1.2'
+os.chdir("src")
 
 setup(
     name='warp-python',
@@ -14,7 +16,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/warp-project/warp-python',
-    packages=find_packages("src", exclude=[]),
+    packages=find_packages(exclude=[]),
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
