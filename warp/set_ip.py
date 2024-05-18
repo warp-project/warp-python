@@ -2,7 +2,7 @@
 Set an ip of a domain
 """
 import requests
-from servers import SERVERS
+from .servers import SERVERS
 
 def set_ip(*, domain_name, ip, key):
     domain = domain_name
