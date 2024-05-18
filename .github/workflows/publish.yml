@@ -10,13 +10,13 @@ name: Upload warp-python
 on:
   workflow_dispatch: 
 
-permissions:
-  contents: read
-
 jobs:
   build-n-publish:
-    name: Build and publish Python 🐍 distributions 📦 to PyPI
+    name: Build and publish Python dist
     runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      id-token: write
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3
@@ -26,5 +26,5 @@ jobs:
     - run: pip install -U wheel build
     - name: Build a binary wheel and a source tarball
       run: python -m build
-    - name: Publish distribution 📦 to PyPI
+    - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
