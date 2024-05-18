@@ -2,4 +2,6 @@
 All server addresses
 """
 
-SERVERS = {}
+SERVERS = {
+    "site": "tlds1.thecommcraft.de"
+}
