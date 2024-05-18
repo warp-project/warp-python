@@ -33,9 +33,12 @@ class TLDServer:
             assert tld or tlds
         except AssertionError:
             raise ValueError("Pass either tld or tlds")
+        def get_tld(domain_name):
+            return domain_name.split(".")[-1]
         @app.get("/resolve/<domain_name>/")
         def resolve_domain(domain_name : str):
-            if not domain_name.endswith("."+tld):
+            domain_tld = get_tld(domain_name)
+            if domain_tld not in self.tlds:
                 return jsonify({"success": False, "ip": None, "reason": "Wrong server"})
             try:
                 domain = domains[domain_name]
@@ -45,7 +48,7 @@ class TLDServer:
         
         @app.post("/set_ip/<domain_name>/")
         def set_domain_ip(domain_name : str):
-            domain_tld = domain_name.split(".")[-1]
+            domain_tld = get_tld(domain_name)
             if domain_tld not in self.tlds:
                 return jsonify({"success": False, "ip": None, "reason": "Wrong server"})
             try:
