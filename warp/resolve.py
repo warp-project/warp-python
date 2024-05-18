@@ -2,7 +2,7 @@
 For resolving domains
 """
 import requests
-from .servers import SERVERS
+from servers import SERVERS
 
 def resolve(domain : str) -> list[tuple[str, int]]:
     domain = domain.removesuffix("<warp>").split(".")
@@ -16,10 +16,10 @@ def resolve(domain : str) -> list[tuple[str, int]]:
     except TimeoutError:
         raise TimeoutError("Server could not be reached.")
     try:
-        assert resp.get("SUCCESS")
+        assert resp.get("success")
     except AssertionError:
-        reason = resp.get("REASON")
+        reason = resp.get("reason")
         if reason == "Domain doesn't exist":
             raise NameError("Domain does not exist")
         raise ConnectionError(f"There was an error while getting the ip: {reason}")
-    return resp["IP"]
+    return resp["ip"]
