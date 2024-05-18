@@ -9,8 +9,8 @@ VERSION = '1.2.6'
 setup(
     name='warp-python',
     version=VERSION,
-    author='warp-project',
-    author_email='simon.c.gilde@gmail.com',
+    author='warp-project, Ryan_shamu',
+    author_email='simon.c.gilde@gmail.com, ryanshamu418@gmail.com',
     description='A python module for WARP',
     long_description=long_description,
     long_description_content_type='text/markdown',
