@@ -5,7 +5,6 @@ with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
     
 VERSION = '1.1.2'
-os.chdir("src")
 
 setup(
     name='warp-python',
