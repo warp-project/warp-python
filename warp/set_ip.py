@@ -2,7 +2,7 @@
 Set an ip of a domain
 """
 import requests
-from .servers import SERVERS
+from servers import SERVERS
 
 def set_ip(*, domain_name, ip, key):
     domain = domain_name
@@ -25,4 +25,4 @@ def set_ip(*, domain_name, ip, key):
         if reason == "Failed Authentication":
             raise PermissionError("Failed Authentication")
         raise ConnectionError(f"There was an error while getting the ip: {reason}")
-    return resp["IP"]
+    return resp["ip"]
