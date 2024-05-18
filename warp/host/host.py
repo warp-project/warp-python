@@ -33,15 +33,17 @@ class TLDServer:
             assert tld or tlds
         except AssertionError:
             raise ValueError("Pass either tld or tlds")
+        
         def get_tld(domain_name):
             return domain_name.split(".")[-1]
+        
         @app.get("/resolve/<domain_name>/")
         def resolve_domain(domain_name : str):
             domain_tld = get_tld(domain_name)
             if domain_tld not in self.tlds:
                 return jsonify({"success": False, "ip": None, "reason": "Wrong server"})
             try:
-                domain = domains[domain_name]
+                domain = self.domains[domain_name]
             except KeyError:
                 return jsonify({"success": False, "ip": None, "reason": "Domain doesn't exist"})
             return jsonify({"success": True, "ip": domain["ip"], "reason": "Found"})
@@ -52,7 +54,7 @@ class TLDServer:
             if domain_tld not in self.tlds:
                 return jsonify({"success": False, "ip": None, "reason": "Wrong server"})
             try:
-                domain = domains[domain_name]
+                domain = self.domains[domain_name]
             except KeyError:
                 return jsonify({"success": False, "ip": None, "reason": "Domain doesn't exist"})
             data = request.json
