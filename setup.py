@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 with open("README.md", encoding="utf-8") as f:
     long_description = f.read()
     
-VERSION = '2.7.2'
+VERSION = '1.1.1'
 
 setup(
     name='warp-python',
