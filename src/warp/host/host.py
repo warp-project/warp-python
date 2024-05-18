@@ -28,6 +28,7 @@ class TLDServer:
         self.app = app
         self.domains = domains or {}
         self.tlds = tlds or [tld]
+        self.tlds = [tld.strip(".") for tld in self.tlds]
         try:
             assert tld or tlds
         except AssertionError:
@@ -44,7 +45,8 @@ class TLDServer:
         
         @app.post("/set_ip/<domain_name>/")
         def set_domain_ip(domain_name : str):
-            if not domain_name.endswith("."+tld):
+            domain_tld = domain_name.split(".")[-1]
+            if domain_tld not in self.tlds:
                 return jsonify({"success": False, "ip": None, "reason": "Wrong server"})
             try:
                 domain = domains[domain_name]
