@@ -1,10 +1,11 @@
 """
-For resolving domains
+Set an ip of a domain
 """
 import requests
 from .servers import SERVERS
 
-def resolve(domain : str) -> list[tuple[str, int]]:
+def set_ip(*, domain_name, ip, key):
+    domain = domain_name
     domain = domain.removesuffix("<warp>").split(".")
     tld = domain.pop(-1)
     try:
@@ -12,7 +13,7 @@ def resolve(domain : str) -> list[tuple[str, int]]:
     except KeyError:
         raise ValueError("No such TLD.")
     try:
-        resp = requests.get(f"https://{server}/resolve/{".".join(domain)}.{tld}/", timeout=5).json()
+        resp = requests.post(f"https://{server}/set_ip/{".".join(domain)}.{tld}/", timeout=5, data={"key": key, "ip": ip}).json()
     except TimeoutError:
         raise TimeoutError("Server could not be reached.")
     try:
@@ -21,5 +22,7 @@ def resolve(domain : str) -> list[tuple[str, int]]:
         reason = resp.get("REASON")
         if reason == "Domain doesn't exist":
             raise NameError("Domain does not exist")
+        if reason == "Failed Authentication":
+            raise PermissionError("Failed Authentication")
         raise ConnectionError(f"There was an error while getting the ip: {reason}")
     return resp["IP"]

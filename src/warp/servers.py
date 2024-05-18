@@ -1,0 +1,5 @@
+"""
+All server addresses
+"""
+
+SERVERS = {}
