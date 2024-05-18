@@ -2,7 +2,7 @@
 For resolving domains
 """
 import requests
-from servers import SERVERS
+from .servers import SERVERS
 
 def resolve(domain : str) -> list[tuple[str, int]]:
     domain = domain.removesuffix("<warp>").split(".")
