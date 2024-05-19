@@ -4,7 +4,7 @@ For resolving domains
 import requests
 from .servers import SERVERS
 
-def resolve(domain : str) -> list[tuple[str, int]]:
+def resolve(domain : str) -> str:
     domain = domain.removesuffix("<warp>").split(".")
     tld = domain.pop(-1)
     try:
