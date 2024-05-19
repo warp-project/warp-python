@@ -5,6 +5,9 @@ import requests
 from .servers import SERVERS
 
 def resolve(domain : str) -> str:
+    """
+    For resolving domains
+    """
     domain = domain.removesuffix("<warp>").split(".")
     tld = domain.pop(-1)
     try:
@@ -21,5 +24,5 @@ def resolve(domain : str) -> str:
         reason = resp.get("reason")
         if reason == "Domain doesn't exist":
             raise NameError("Domain does not exist")
-        raise ConnectionError(f"There was an error while getting the ip: {reason}")
+        raise Exception(f"There was an error while getting the ip: {reason}")
     return resp["ip"]

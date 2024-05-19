@@ -1,13 +1,13 @@
 """
-Set an ip of a domain
+Create a new domain
 """
 from typing import Union
 import requests
 from .servers import SERVERS
 
-def set_ip(*, domain_name : str, ip : str, key : Union[str, int]):
+def create_domain(*, domain_name : str, key : str, owner : str) -> Union[str, int]:
     """
-    Set an ip of a domain
+    Create a new domain
     """
     domain = domain_name
     domain = domain.removesuffix("<warp>").split(".")
@@ -17,16 +17,14 @@ def set_ip(*, domain_name : str, ip : str, key : Union[str, int]):
     except KeyError:
         raise ValueError("No such TLD.")
     try:
-        resp = requests.post(f"https://{server}/set_ip/{'.'.join(domain)}.{tld}/", timeout=5, json={"key": key, "ip": ip}).json()
+        resp = requests.post(f"https://{server}/new_domain/{'.'.join(domain)}.{tld}/", timeout=5, json={"access_key": key, "owner": owner}).json()
     except TimeoutError:
         raise TimeoutError("Server could not be reached.")
     try:
         assert resp.get("success")
     except AssertionError:
         reason = resp.get("reason")
-        if reason == "Domain doesn't exist":
-            raise NameError("Domain does not exist")
-        if reason == "Failed Authentication":
+        if reason == "Unauthorized":
             raise PermissionError("Failed Authentication")
-        raise Exception(f"There was an error while setting the ip: {reason}")
-    return resp["ip"]
+        raise Exception(f"There was an error while creating the domain: {reason}")
+    return resp["key"]
