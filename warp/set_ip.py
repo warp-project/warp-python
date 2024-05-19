@@ -13,7 +13,7 @@ def set_ip(*, domain_name, ip, key):
     except KeyError:
         raise ValueError("No such TLD.")
     try:
-        resp = requests.post(f"https://{server}/set_ip/{'.'.join(domain)}.{tld}/", timeout=5, data={"key": key, "ip": ip}).json()
+        resp = requests.post(f"https://{server}/set_ip/{'.'.join(domain)}.{tld}/", timeout=5, json={"key": key, "ip": ip}).json()
     except TimeoutError:
         raise TimeoutError("Server could not be reached.")
     try:
