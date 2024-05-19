@@ -17,12 +17,12 @@ def set_ip(*, domain_name, ip, key):
     except TimeoutError:
         raise TimeoutError("Server could not be reached.")
     try:
-        assert resp.get("SUCCESS")
+        assert resp.get("success")
     except AssertionError:
-        reason = resp.get("REASON")
+        reason = resp.get("reason")
         if reason == "Domain doesn't exist":
             raise NameError("Domain does not exist")
         if reason == "Failed Authentication":
             raise PermissionError("Failed Authentication")
-        raise ConnectionError(f"There was an error while getting the ip: {reason}")
+        raise ConnectionError(f"There was an error while setting the ip: {reason}")
     return resp["ip"]
